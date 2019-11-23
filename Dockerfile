@@ -9,5 +9,5 @@ RUN yum install docker-ce -y
 RUN git init
 RUN git pull https://github.com/irakholla/git_web_jen_no_remote.git
 RUN ["chmod", "+x", "/devops/web.sh"]
-EXPOSE 5000:5001
+EXPOSE 5000:5000
 ENTRYPOINT ["/devops/web.sh"]
