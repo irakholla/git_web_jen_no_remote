@@ -8,15 +8,15 @@ pipeline {
         stage('test') {
            steps {
             sh """
-               yum update -y && \
-               yum install python3 -y && \
-               yum install git -y && \
-               yum config-manager --add-repo https://download.docker.com/linux/centos/docker-ce.repo && \
-               yum install docker-ce -y && \
-               systemctl enable --now docker && \
-               git init; git pull https://github.com/irakholla/project.git && \
-               chmod '+x' jen/pipeline.sh && \
-               jen/pipeline.sh
+              python3 -m venv venv
+              . venv/bin/activate
+              pip install -e .
+              export FLASK_APP=js_example
+              LC_ALL=en_US.utf8
+              export LC_ALL
+              pip install -e '.[test]'
+              coverage run -m pytest
+              coverage report
             """
            }
         }
